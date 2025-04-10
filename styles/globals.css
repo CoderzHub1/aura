@@ -6,3 +6,7 @@
 body{
   background: linear-gradient(135deg, #1e293b, #0f172a);
 }
+
+.transition-zoom-in{
+  transition: cubic-bezier(0.215, 0.610, 0.355, 1) 0.4s;
+  }

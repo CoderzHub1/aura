@@ -1,0 +1,90 @@
+.container {
+  position: relative;
+  width: 1080px;
+  height: 720px;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.canvas {
+  border-radius: 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(209, 213, 219, 0.1);
+}
+
+.glassPanel {
+  position: absolute;  /* Change from fixed to absolute */
+  top: 1.5rem;
+  left: 1.5rem;
+  padding: 1rem;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  z-index: 10;  /* Add z-index to ensure it stays above the canvas */
+}
+
+.statusContainer {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.statusText {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+  transition: opacity 0.3s ease;
+}
+
+.statusText.active {
+  color: rgb(52, 211, 153);
+}
+
+.statusText.inactive {
+  color: rgb(248, 113, 113);
+}
+
+.statusDot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+  box-shadow: 0 0 12px currentColor;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.statusDot.active {
+  background-color: rgb(52, 211, 153);
+}
+
+.statusDot.inactive {
+  background-color: rgb(248, 113, 113);
+}
+
+.distressAlert {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgb(239, 68, 68);
+  font-weight: 500;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.alertIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+}

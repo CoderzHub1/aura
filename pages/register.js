@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import styles from '../styles/get-started.module.css';
-import Link from 'next/link';
+import styles from '../styles/register.module.css';
+import Link from 'next/link'; 
 
-const GetStarted = () => {
+const Register = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -16,12 +17,12 @@ const GetStarted = () => {
     setSuccess('');
 
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch('/api/addUsers', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ name, email, password }),
       });
 
       const data = await response.json();
@@ -43,8 +44,20 @@ const GetStarted = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Login</h1>
+      <h1 className={styles.title}>Register</h1>
       <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.inputGroup}>
+        <label htmlFor="email" className={styles.label}>Name:</label>
+          <input
+            type="name"
+            id="name"
+            name="name"
+            className={styles.input}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
         <div className={styles.inputGroup}>
           <label htmlFor="email" className={styles.label}>Email:</label>
           <input
@@ -69,16 +82,15 @@ const GetStarted = () => {
             required
           />
         </div>
-        <button type="submit" className={styles.button}>Sign In</button>
+        <button type="submit" className={styles.button}>Register</button>
         {error && <p className={styles.error}>{error}</p>}
         {success && <p className={styles.success}>{success}</p>}
-
-        <Link href="/register" className={styles.registerLink}>
-          Don't have an account? <strong>Sign Up</strong> here
+        <Link href="/get-started" className={styles.registerLink}>
+          Already have an account? <strong>Sign In</strong> here
         </Link>
       </form>
     </div>
   );
 };
 
-export default GetStarted;
+export default Register;

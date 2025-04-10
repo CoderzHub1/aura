@@ -1,7 +1,7 @@
 .navbar {
-    border-radius: 5vw;
+    border-radius: 1vw;
     display: flex;
-    margin: 10px;
+    margin: 20px;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
@@ -14,7 +14,6 @@
     position: sticky;
     top: 0;
     z-index: 1000;
-    transition: all 3s ease-in-out;
 }
 
 .logo a {
