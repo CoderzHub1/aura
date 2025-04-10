@@ -1,6 +1,6 @@
 import AuraGesture from "./components/AuraGesture";
 import Navbar from "./components/Navbar";
-import styles from "./gestures.module.css";
+import styles from "../styles/gestures.module.css";
 
 export default function GesturePage() {
   return (
