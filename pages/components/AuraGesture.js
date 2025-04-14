@@ -8,9 +8,33 @@ export default function AuraGesture() {
   const [auraActive, setAuraActive] = useState(false);
   const [distress, setDistress] = useState(false);
   const distressCounterRef = useRef(0);
+  const distressNotifiedRef = useRef(false);
   const DISTRESS_THRESHOLD = 5;
+  const [userEmail, setUserEmail] = useState('');
+  const [location, setLocation] = useState(null);
 
   useEffect(() => {
+    // Get user email from local storage
+    const email = localStorage.getItem('userEmail');
+    if (email) {
+      setUserEmail(email);
+    }
+
+    // Get user's location if available
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          });
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+        }
+      );
+    }
+
     let hands;
     let animationFrameId;
 
@@ -47,6 +71,7 @@ export default function AuraGesture() {
           modelComplexity: 1,
           minDetectionConfidence: 0.75,
           minTrackingConfidence: 0.75,
+          
         });
 
         hands.onResults(onResults);
@@ -109,9 +134,20 @@ export default function AuraGesture() {
             distressCounterRef.current += 1;
           } else {
             distressCounterRef.current = 0;
+            // Reset notification flag when distress gesture stops
+            if (distress) {
+              distressNotifiedRef.current = false;
+            }
           }
 
-          setDistress(distressCounterRef.current >= DISTRESS_THRESHOLD);
+          const isDistressDetected = distressCounterRef.current >= DISTRESS_THRESHOLD;
+          setDistress(isDistressDetected);
+
+          // Send notification when distress is first detected
+          if (isDistressDetected && !distressNotifiedRef.current && userEmail) {
+            sendEmergencyEmail();
+            distressNotifiedRef.current = true; // Prevent repeated notifications
+          }
         }
       } catch (err) {
         console.error('❌ Error during setup:', err);
@@ -127,7 +163,42 @@ export default function AuraGesture() {
         videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
       }
     };
-  }, []);
+  }, [userEmail]);
+
+  const sendEmergencyEmail = async () => {
+    try {
+      if (!userEmail) {
+        console.error('User email not available');
+        return;
+      }
+
+      const locationString = location 
+        ? `Latitude: ${location.latitude}, Longitude: ${location.longitude}
+          Google Maps: https://www.google.com/maps?q=${location.latitude},${location.longitude}`
+        : null;
+
+      const response = await fetch('/api/sendEmergencyEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: userEmail,
+          message: 'DISTRESS DETECTED: Emergency assistance may be needed!',
+          location: locationString,
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log('Emergency emails sent successfully');
+      } else {
+        console.error('Failed to send emergency emails:', data.message);
+      }
+    } catch (error) {
+      console.error('Error sending emergency emails:', error);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -151,6 +222,7 @@ export default function AuraGesture() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
               DISTRESS DETECTED
+              {distressNotifiedRef.current && <div className={styles.notificationSent}>Emergency contacts notified</div>}
             </div>
           )}
         </div>

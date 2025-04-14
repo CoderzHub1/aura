@@ -1,0 +1,128 @@
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.title {
+    color: #333;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.error {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.userInfo {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.userInfo h2 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.userInfo p {
+    margin: 0.5rem 0;
+    color: #666;
+}
+
+.emergencyContacts {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.emergencyContacts h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.contactsList {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.contactCard {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 6px;
+    position: relative;
+}
+
+.contactCard p {
+    margin: 0.5rem 0;
+    color: #666;
+}
+
+.removeButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.removeButton:hover {
+    background-color: #c82333;
+}
+
+.addContactForm {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 6px;
+}
+
+.addContactForm h3 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.addContactForm input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.addContactForm button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.addContactForm button:hover {
+    background-color: #0056b3;
+} 
