@@ -1,5 +1,6 @@
 import AuraGesture from "./components/AuraGesture";
 import Navbar from "./components/Navbar";
+import VoiceRecognition from "./components/VoiceRecognition";
 import styles from "../styles/gestures.module.css";
 
 export default function GesturePage() {
@@ -10,6 +11,7 @@ export default function GesturePage() {
       <div className={styles.gestureWrapper}>
         <AuraGesture />
       </div>
+      <VoiceRecognition />
     </div>
   );
 }

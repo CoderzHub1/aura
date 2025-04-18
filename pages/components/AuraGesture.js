@@ -13,6 +13,17 @@ export default function AuraGesture() {
   const [userEmail, setUserEmail] = useState('');
   const [location, setLocation] = useState(null);
 
+  // Helper function to check if a hand is in distress position
+  const isHandInDistressPosition = (landmarks) => {
+    // Get y coordinates for key points
+    const y = (i) => landmarks[i].y;
+
+    // Check if fingers are folded (all finger tips are below their middle joints)
+    const fingersFolded = [8, 12, 16, 20].every((i) => y(i) > y(i - 2));
+    
+    return fingersFolded;
+  };
+
   useEffect(() => {
     // Get user email from local storage
     const email = localStorage.getItem('userEmail');
@@ -110,6 +121,28 @@ export default function AuraGesture() {
           ctx.drawImage(results.image, 0, 0, canvas.width, canvas.height);
 
           if (results.multiHandLandmarks) {
+            // Check for distress in any detected hand
+            const anyHandInDistress = results.multiHandLandmarks.some(isHandInDistressPosition);
+            
+            if (anyHandInDistress) {
+              distressCounterRef.current += 1;
+            } else {
+              distressCounterRef.current = 0;
+              if (distress) {
+                distressNotifiedRef.current = false;
+              }
+            }
+
+            const isDistressDetected = distressCounterRef.current >= DISTRESS_THRESHOLD;
+            setDistress(isDistressDetected);
+
+            // Send notification when distress is first detected
+            if (isDistressDetected && !distressNotifiedRef.current && userEmail) {
+              sendEmergencyEmail();
+              distressNotifiedRef.current = true;
+            }
+
+            // Draw hand landmarks
             for (const landmarks of results.multiHandLandmarks) {
               drawConnectors(ctx, landmarks, HAND_CONNECTIONS, { color: '#00FF00', lineWidth: 2 });
               drawLandmarks(ctx, landmarks, { color: '#FF0000', lineWidth: 1 });
@@ -118,36 +151,15 @@ export default function AuraGesture() {
           }
         }
 
-        function detectGestures(hand) {
-          const y = (i) => hand[i].y;
-          const x = (i) => hand[i].x;
+        function detectGestures(landmarks) {
+          const y = (i) => landmarks[i].y;
+          const x = (i) => landmarks[i].x;
 
           const isVictory = y(8) < y(20) && y(12) < y(20) && y(16) > y(20);
           const isOppVictory = y(8) > y(20) && y(12) > y(20) && y(16) < y(20);
-          const fingersFolded = [8, 12, 16, 20].every((i) => y(i) > y(i - 2));
-          const thumbInside = x(4) > x(8) && x(4) < x(20);
 
           if (isVictory) setAuraActive(true);
           else if (isOppVictory) setAuraActive(false);
-
-          if (fingersFolded && thumbInside) {
-            distressCounterRef.current += 1;
-          } else {
-            distressCounterRef.current = 0;
-            // Reset notification flag when distress gesture stops
-            if (distress) {
-              distressNotifiedRef.current = false;
-            }
-          }
-
-          const isDistressDetected = distressCounterRef.current >= DISTRESS_THRESHOLD;
-          setDistress(isDistressDetected);
-
-          // Send notification when distress is first detected
-          if (isDistressDetected && !distressNotifiedRef.current && userEmail) {
-            sendEmergencyEmail();
-            distressNotifiedRef.current = true; // Prevent repeated notifications
-          }
         }
       } catch (err) {
         console.error('❌ Error during setup:', err);
