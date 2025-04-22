@@ -74,7 +74,7 @@ const GetStarted = () => {
         {success && <p className={styles.success}>{success}</p>}
 
         <Link href="/register" className={styles.registerLink}>
-          Don't have an account? <strong>Sign Up</strong> here
+          Don&apos;t have an account? <strong>Sign Up</strong> here
         </Link>
       </form>
     </div>

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import Users from "../models/Users";
+import Users from "../../models/Users";
 import connectDb from "../utils/connectDb";
 
 const handler = async (req, res) => {

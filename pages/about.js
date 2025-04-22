@@ -24,7 +24,7 @@ const About = () => {
           <h2>Our Mission</h2>
           <p>
             At Aura, we believe that technology should be accessible to everyone. Our mission is to break down barriers by providing intuitive, 
-            gesture-based interfaces that can be used by people of all abilities. We're committed to creating a more inclusive digital world.
+            gesture-based interfaces that can be used by people of all abilities. We are committed to creating a more inclusive digital world.
           </p>
         </section>
 

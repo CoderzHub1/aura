@@ -75,4 +75,4 @@ function arrayLimit(val) {
 }
 
 mongoose.models = {}
-export default mongoose.model("AuraUsers", userSchema);
+export default mongoose.model("AuraUsers", userSchema); 

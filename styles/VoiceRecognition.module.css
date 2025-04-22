@@ -9,6 +9,13 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.buttonGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
 .listenButton {
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
   color: white;
@@ -19,8 +26,8 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-bottom: 1.5rem;
   width: 200px;
+  margin-right: 1rem;
 }
 
 .listenButton:hover {
@@ -31,6 +38,24 @@
 .listenButton.listening {
   background: linear-gradient(135deg, #ef4444, #dc2626);
   animation: pulse 2s infinite;
+}
+
+.resetButton {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 200px;
+}
+
+.resetButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
 }
 
 @keyframes pulse {
@@ -91,7 +116,8 @@
 }
 
 .transcriptContainer,
-.responseContainer {
+.responseContainer,
+.chatContainer {
   background: rgba(255, 255, 255, 0.05);
   padding: 1.5rem;
   border-radius: 0.5rem;
@@ -99,18 +125,66 @@
 }
 
 .transcriptContainer h3,
-.responseContainer h3 {
+.responseContainer h3,
+.chatContainer h3 {
   color: #ffffff;
   margin-bottom: 0.5rem;
   font-size: 1.2rem;
 }
 
 .transcriptContainer p,
-.responseContainer p {
+.responseContainer p,
+.chatContainer p {
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.6;
   margin: 0;
   font-size: 1rem;
+}
+
+.chatHistory {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  margin-bottom: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.chatHistory::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chatHistory::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chatHistory::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+}
+
+.chatMessage {
+  padding: 1rem;
+  border-radius: 0.75rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+  position: relative;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.chatMessage.user {
+  background: rgba(99, 102, 241, 0.15);
+  border-top-right-radius: 0;
+  margin-left: 2rem;
+  margin-right: 0.5rem;
+  text-align: right;
+}
+
+.chatMessage.assistant {
+  background: rgba(16, 185, 129, 0.15);
+  border-top-left-radius: 0;
+  margin-right: 2rem;
+  margin-left: 0.5rem;
 }
 
 .speakButton {

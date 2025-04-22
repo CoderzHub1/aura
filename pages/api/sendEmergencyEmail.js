@@ -1,4 +1,4 @@
-import Users from '../models/Users';
+import Users from '../../models/Users';
 import connectDb from '../utils/connectDb';
 import nodemailer from 'nodemailer';
 
