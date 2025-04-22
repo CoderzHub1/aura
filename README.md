@@ -1,6 +1,6 @@
 # 🌟 Aura – Your Smart AI Home Assistant
 
-**Aura** is a tech-powered AI home automation web application that combines gesture recognition, distress detection, and voice interaction to create a seamless smart home experience. Built using **Next.js** and **MongoDB**, Aura is your intelligent assistant that’s always listening (but only when you want it to).
+**Aura** is a tech-powered AI home automation web application that combines gesture recognition, distress detection as well as voice interaction to create a seamless smart home experience. Built using **Next.js** and **MongoDB**, Aura is your intelligent assistant that’s always listening (but only when you want it to).
 
 ---
 
